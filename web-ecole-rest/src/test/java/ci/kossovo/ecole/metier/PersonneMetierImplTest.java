@@ -22,7 +22,7 @@ import ci.kossovo.ecole.exceptions.InvalidPersonneException;
 public class PersonneMetierImplTest {
 	
 	@Autowired
-	private IPersonneMetier personneMetier;
+	private PersonneMetierImpl personneTest;
 
 	@MockBean
 	private PersonneRepository personneRepositoryMock;
@@ -38,7 +38,7 @@ public class PersonneMetierImplTest {
 		given(personneRepositoryMock.save(p)).willReturn(p1);
 
 		// when
-		Personne ps = personneMetier.creer(p);
+		Personne ps = personneTest.creer(p);
 
 		// then
 		verify(personneRepositoryMock).save(p);
@@ -58,7 +58,7 @@ public class PersonneMetierImplTest {
 		// when
 		Personne p1 = null;
 		try {
-			p1 = personneMetier.creer(p);
+			p1 = personneTest.creer(p);
 		} catch (InvalidPersonneException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +82,7 @@ public class PersonneMetierImplTest {
 		// when
 		Personne p1 = null;
 		try {
-			p1 = personneMetier.creer(p);
+			p1 = personneTest.creer(p);
 		} catch (InvalidPersonneException e) {
 			e.printStackTrace();
 		}
@@ -108,7 +108,7 @@ public class PersonneMetierImplTest {
 		//when
 		Personne ps=null;
 		try {
-			 ps=personneMetier.modifier(pex);
+			 ps=personneTest.modifier(pex);
 		} catch (InvalidPersonneException e) {
 			e.printStackTrace();
 		}
@@ -138,7 +138,7 @@ public class PersonneMetierImplTest {
 		//when
 		Personne ps=null;
 		try {
-			ps=personneMetier.modifier(entity);
+			ps=personneTest.modifier(entity);
 		} catch (InvalidPersonneException e) {
 			e.printStackTrace();
 		}
