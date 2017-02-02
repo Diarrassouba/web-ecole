@@ -1,0 +1,50 @@
+package ci.kossovo.ecole.entity;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "T_ENSEIGNANT")
+@DiscriminatorValue("EN")
+public class Enseignant extends Personne {
+	private static final long serialVersionUID = 1L;
+
+	private String status;
+
+	public Enseignant() {
+
+	}
+
+	public Enseignant(String titre, Adresse adresse, String nom, String prenom, String status) {
+		super(titre, adresse, nom, prenom);
+		this.status = status;
+	}
+	
+	
+
+	public Enseignant(String titre, String nom, String prenom, String status) {
+		super(titre, nom, prenom);
+		this.status = status;
+	}
+
+	
+	
+	public Enseignant(String titre, String nom, String prenom, String numCni, String status) {
+		super(titre, nom, prenom, numCni);
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Enseignant[%s]", super.toString());
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+}
