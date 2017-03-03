@@ -72,7 +72,7 @@ public class PersonneTest {
 		entityManager.persist(new Personne("Mme", "Koné", "Asta"));
 		entityManager.persist(new Etudiant("Mme", "Diabaté", "Mawa", "E00102"));
 		entityManager.persist(new Enseignant("Mme", "Koné", "Asta", "Active"));
-		List<Personne> ets = personneRepository.findAllEtudiant();
+		List<Etudiant> ets = personneRepository.findAllEtudiant();
 		assertThat(ets.size()).isEqualTo(1);
 
 	}
@@ -83,7 +83,7 @@ public class PersonneTest {
 		entityManager.persist(new Enseignant("Mme", "Koné", "Asta", "Active"));
 		List<Personne> ets = personneRepository.findAll();
 		personneRepository.delete(ets);
-		List<Personne> ets1 = personneRepository.findAllEtudiant();
+		List<Etudiant> ets1 = personneRepository.findAllEtudiant();
 		assertThat(ets1.size()).isEqualTo(0);
 		
 	}

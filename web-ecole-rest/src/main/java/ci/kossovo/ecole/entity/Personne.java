@@ -75,10 +75,21 @@ public class Personne extends AbstractEntity {
 		this.numCni = numCni;
 	}
 
+	// Pour le test
+	public Personne(Long id, String titre, String nom, String prenom, String numCni) {
+		super(id);
+		this.titre = titre;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.numCni = numCni;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Personne[%s,%s,%s,%s]", id, version, titre, nomComplet);
 	}
+
+	
 
 	public String getNomComplet() {
 		return nomComplet;
