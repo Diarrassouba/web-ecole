@@ -1,6 +1,7 @@
 package ci.kossovo.ecole.metier;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ci.kossovo.ecole.dao.EnseigneRepository;
 import ci.kossovo.ecole.dao.PersonneRepository;
 import ci.kossovo.ecole.entity.Enseigne;
+import ci.kossovo.ecole.entity.Etudiant;
 import ci.kossovo.ecole.entity.Personne;
 import ci.kossovo.ecole.exceptions.InvalidPersonneException;
 
@@ -26,9 +28,13 @@ public class PersonneMetierImpl implements IPersonneMetier {
 			throw new InvalidPersonneException("Le nom, prenom ou numCni ne peut etre null");
 		};
 
-		Personne p = personneRepository.findByNumCni(entity.getNumCni());
-		if (p != null)
-			throw new InvalidPersonneException("Cette personne existe dejà.");
+		try {
+			Personne p = personneRepository.findByNumCni(entity.getNumCni());
+			if (p != null)
+				throw new InvalidPersonneException("Cette personne existe dejà.");
+		} catch (Exception e) {
+			throw new InvalidPersonneException("Probleme de connexion db");
+		}
 
 		return personneRepository.save(entity);
 	}
@@ -36,9 +42,9 @@ public class PersonneMetierImpl implements IPersonneMetier {
 	@Override
 	public Personne modifier(Personne entity) throws InvalidPersonneException {
 		Personne p = personneRepository.findByNumCni(entity.getNumCni());
-		if (entity.getId()!= p.getId()) {
+		if (p!=null && entity.getId()!= p.getId()) {
 			
-				throw new InvalidPersonneException("Cet indentifiant existe dejà.");
+				throw new InvalidPersonneException("Cet indentifiant cni existe dejà.");
 		}
 
 		return personneRepository.save(entity);
@@ -52,6 +58,16 @@ public class PersonneMetierImpl implements IPersonneMetier {
 	@Override
 	public List<Personne> findAll() {
 		return personneRepository.findAll();
+	}
+	
+	//liste de personnes par type
+	@Override
+	public List<Personne> personneAll(String type) {
+		List<Personne> personnes=personneRepository.findAll();
+		//filtre par type de personnes
+		List<Personne> typePersonnes=personnes.stream().filter(
+				p-> p.getType().equals(type)).collect(Collectors.toList());
+		return typePersonnes;
 	}
 
 	@Override
@@ -107,7 +123,7 @@ public class PersonneMetierImpl implements IPersonneMetier {
 	}
 
 	@Override
-	public List<Personne> listEtudiants() {
+	public List<Etudiant> listEtudiants() {
 		return personneRepository.findAllEtudiant();
 	}
 
@@ -146,5 +162,7 @@ public class PersonneMetierImpl implements IPersonneMetier {
 	public List<Personne> personneAll() {
 		return personneRepository.findByType("PE");
 	}
+
+	
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import ci.kossovo.ecole.entity.Etudiant;
 import ci.kossovo.ecole.entity.Personne;
 import java.lang.String;
 
@@ -22,7 +23,7 @@ public interface PersonneRepository extends JpaRepository<Personne, Long> {
 	List<Personne> getFonctionIgnoreCase(String fonction);
 
 	@Query("select e from Etudiant e")
-	List<Personne> findAllEtudiant();
+	List<Etudiant> findAllEtudiant();
 
 	@Query("select e from Etudiant e where e.nomComplet like %?1%")
 	List<Personne> findAllEtudiantParMc(String mc);
